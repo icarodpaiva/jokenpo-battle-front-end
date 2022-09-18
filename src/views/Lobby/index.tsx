@@ -10,16 +10,11 @@ interface LobbyProps {
 export const Lobby = ({ setView }: LobbyProps) => {
   let { allPlayers } = useSocketContext()
 
-  if (!allPlayers || allPlayers.length <= 0) {
-    setView("EnterRoom")
-    return null
-  }
-
   return (
     <BaseLayout>
-      <h1>Players online: {allPlayers.length}</h1>
+      <h1>Players online: {allPlayers?.length ?? 0}</h1>
 
-      {allPlayers.map(({ id, name }) => (
+      {allPlayers?.map(({ id, name }) => (
         <h2 key={id}>{name}</h2>
       ))}
 
