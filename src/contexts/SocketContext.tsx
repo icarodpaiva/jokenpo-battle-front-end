@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from "react"
 import type { Socket } from "socket.io-client"
-import { AllPlayers, TourmentBrackets } from "../types/Players"
+import { PlayersList, TourmentBrackets } from "../types/Players"
 import { View } from "../types/View"
 
 interface SocketContextProps {
@@ -9,7 +9,7 @@ interface SocketContextProps {
   setView?: (view: View) => void
   socket?: Socket
   setSocket?: (socket: Socket) => void
-  allPlayers?: AllPlayers[]
+  playersList?: PlayersList[]
   tournmentBrackets?: TourmentBrackets[][]
 }
 
@@ -17,13 +17,13 @@ const SocketContext = createContext<SocketContextProps | null>(null)
 
 export const SocketProvider = ({ children }: SocketContextProps) => {
   const [view, setView] = useState<View>("EnterRoom")
-  const [allPlayers, setAllPlayers] = useState<AllPlayers[]>([])
+  const [playersList, setPlayersList] = useState<PlayersList[]>([])
   const [tournmentBrackets, setTournmentBrackets] = useState<
     TourmentBrackets[][]
   >([])
   const [socket, setSocket] = useState<Socket | undefined>()
 
-  socket?.on("players", players => setAllPlayers(players))
+  socket?.on("players", players => setPlayersList(players))
 
   socket?.on("tournment_brackets", brackets => {
     setTournmentBrackets(brackets)
@@ -39,7 +39,7 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
         setView,
         socket,
         setSocket,
-        allPlayers,
+        playersList,
         tournmentBrackets
       }}
     >

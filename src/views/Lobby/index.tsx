@@ -5,17 +5,17 @@ import { useSocketContext } from "../../contexts/SocketContext"
 interface LobbyProps {}
 
 export const Lobby = ({}: LobbyProps) => {
-  const { setView, socket, allPlayers } = useSocketContext()
+  const { setView, socket, playersList } = useSocketContext()
 
-  if (!allPlayers || allPlayers.length <= 0) {
+  if (!playersList || playersList.length <= 0) {
     return <h3>Loading...</h3>
   }
 
   return (
     <BaseLayout>
-      <h1>Players online: {allPlayers?.length ?? 0}</h1>
+      <h1>Players online: {playersList?.length ?? 0}</h1>
 
-      {allPlayers?.map(({ id, name }) => (
+      {playersList?.map(({ id, name }) => (
         <h2 key={id}>{name}</h2>
       ))}
 
