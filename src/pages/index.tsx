@@ -1,16 +1,19 @@
-import React from "react"
-import type { HeadFC } from "gatsby"
-import { BaseLayout } from "../layouts/BaseLayout"
-import "../styles/pages/index.scss"
+import React, { useState } from "react"
+import { SocketProvider } from "../contexts/SocketContext"
+import { EnterRoom } from "../views/EnterRoom"
+import { Lobby } from "../views/Lobby"
+import type { View } from "../types/View"
+import "../styles/global.scss"
 
 const IndexPage = () => {
+  const [view, setView] = useState<View>("EnterRoom")
+
   return (
-    <BaseLayout>
-      <h1>Start</h1>
-    </BaseLayout>
+    <SocketProvider>
+      {view === "EnterRoom" && <EnterRoom setView={setView} />}
+      {view === "Lobby" && <Lobby setView={setView} />}
+    </SocketProvider>
   )
 }
 
 export default IndexPage
-
-export const Head: HeadFC = () => <title>Home Page</title>
