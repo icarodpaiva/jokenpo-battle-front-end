@@ -22,7 +22,7 @@ export const EnterRoom = ({ setView }: EnterRoomProps) => {
     }
 
     setSocket?.(
-      io(process.env.API_URL ?? "http://localhost:3000").emit(
+      io(process.env.GATSBY_API_URL ?? "http://localhost:3000").emit(
         "name",
         nameRef.current?.value
       )
