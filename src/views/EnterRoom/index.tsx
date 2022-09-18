@@ -2,16 +2,13 @@ import React, { useRef, useState } from "react"
 import { BaseLayout } from "../../layouts/BaseLayout"
 import { useSocketContext } from "../../contexts/SocketContext"
 import { io } from "socket.io-client"
-import { View } from "../../types/View"
 
-interface EnterRoomProps {
-  setView: (view: View) => void
-}
+interface EnterRoomProps {}
 
-export const EnterRoom = ({ setView }: EnterRoomProps) => {
+export const EnterRoom = ({}: EnterRoomProps) => {
   const [errorMsg, setErrorMsg] = useState("")
   const nameRef = useRef<HTMLInputElement | null>(null)
-  const { setSocket } = useSocketContext()
+  const { setView, setSocket } = useSocketContext()
 
   const handleConnect = () => {
     const name = nameRef.current?.value
@@ -23,12 +20,12 @@ export const EnterRoom = ({ setView }: EnterRoomProps) => {
 
     setSocket?.(
       io(process.env.GATSBY_API_URL ?? "http://localhost:3000").emit(
-        "name",
+        "player_connect",
         nameRef.current?.value
       )
     )
 
-    setView("Lobby")
+    setView?.("Lobby")
   }
 
   return (

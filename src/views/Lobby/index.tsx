@@ -1,14 +1,11 @@
 import React from "react"
 import { BaseLayout } from "../../layouts/BaseLayout"
 import { useSocketContext } from "../../contexts/SocketContext"
-import type { View } from "../../types/View"
 
-interface LobbyProps {
-  setView: (view: View) => void
-}
+interface LobbyProps {}
 
-export const Lobby = ({ setView }: LobbyProps) => {
-  const { allPlayers } = useSocketContext()
+export const Lobby = ({}: LobbyProps) => {
+  const { setView, socket, allPlayers } = useSocketContext()
 
   if (!allPlayers || allPlayers.length <= 0) {
     return <h3>Loading...</h3>
@@ -22,7 +19,9 @@ export const Lobby = ({ setView }: LobbyProps) => {
         <h2 key={id}>{name}</h2>
       ))}
 
-      <button onClick={() => setView("EnterRoom")}>back</button>
+      <button onClick={() => socket?.emit("tournment_start")}>start</button>
+      <br />
+      <button onClick={() => setView?.("EnterRoom")}>back</button>
     </BaseLayout>
   )
 }

@@ -1,18 +1,18 @@
-import React, { useState } from "react"
-import { SocketProvider } from "../contexts/SocketContext"
+import React from "react"
+import { useSocketContext } from "../contexts/SocketContext"
 import { EnterRoom } from "../views/EnterRoom"
 import { Lobby } from "../views/Lobby"
-import type { View } from "../types/View"
-import "../styles/global.scss"
+import { Tournment } from "../views/Tournment"
 
 const IndexPage = () => {
-  const [view, setView] = useState<View>("EnterRoom")
+  const { view } = useSocketContext()
 
   return (
-    <SocketProvider>
-      {view === "EnterRoom" && <EnterRoom setView={setView} />}
-      {view === "Lobby" && <Lobby setView={setView} />}
-    </SocketProvider>
+    <div className="main-container">
+      {view === "EnterRoom" && <EnterRoom />}
+      {view === "Lobby" && <Lobby />}
+      {view === "Tournment" && <Tournment />}
+    </div>
   )
 }
 
