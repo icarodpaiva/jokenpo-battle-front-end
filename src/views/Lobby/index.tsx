@@ -10,7 +10,7 @@ interface LobbyProps {
 export const Lobby = ({ setView }: LobbyProps) => {
   let { allPlayers } = useSocketContext()
 
-  if (!allPlayers) {
+  if (!allPlayers || allPlayers.length <= 0) {
     setView("EnterRoom")
     return null
   }
