@@ -7,16 +7,14 @@ interface TournmentProps {}
 export const Tournment = ({}: TournmentProps) => {
   const { setView, tournmentBrackets } = useSocketContext()
 
-  console.log(tournmentBrackets)
-
   return (
     <BaseLayout>
       <h1>Tournment brackets: </h1>
       {tournmentBrackets?.map((rows, index) => (
         <div key={index}>
-          {rows.map(player => (
+          {rows.map((player, index) => (
             <p
-              key={player?.id}
+              key={player?.id ?? index}
               style={{
                 background:
                   player?.winner === true
