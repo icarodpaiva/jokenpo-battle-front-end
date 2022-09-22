@@ -7,8 +7,6 @@ interface LobbyProps {}
 export const Lobby = ({}: LobbyProps) => {
   const { setView, socket, playersList } = useSocketContext()
 
-  console.log(socket)
-
   if (!playersList || playersList.length <= 0) {
     return <h3>Loading...</h3>
   }

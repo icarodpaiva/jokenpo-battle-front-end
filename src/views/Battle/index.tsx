@@ -8,8 +8,6 @@ export const Battle = ({}: EnterRoomProps) => {
   const [playerMove, setPlayerMove] = useState("")
   const { idPlayer, battlePlayers, socket, battleMoves } = useSocketContext()
 
-  console.log("battleMoves", battleMoves)
-
   const isPlayer1 = idPlayer === battlePlayers?.player1.id
   const isPlayer2 = idPlayer === battlePlayers?.player2.id
 
@@ -18,20 +16,29 @@ export const Battle = ({}: EnterRoomProps) => {
 
   const handleMove = (move: string) => {
     setPlayerMove(move)
-    socket?.emit("player_move", { isPlayer1, isPlayer2, playerMove })
+    socket?.emit("player_move", { isPlayer1, isPlayer2, move })
   }
 
   return (
     <BaseLayout>
       <div>
         <h1>{battlePlayers?.player1.name}</h1>
-        <button disabled={disabledP1} onClick={() => handleMove("rock")}>
+        <button
+          disabled={disabledP1}
+          onClick={(e: any) => handleMove(e.target.innerText)}
+        >
           Pedra
         </button>
-        <button disabled={disabledP1} onClick={() => handleMove("paper")}>
+        <button
+          disabled={disabledP1}
+          onClick={(e: any) => handleMove(e.target.innerText)}
+        >
           Papel
         </button>
-        <button disabled={disabledP1} onClick={() => handleMove("scissors")}>
+        <button
+          disabled={disabledP1}
+          onClick={(e: any) => handleMove(e.target.innerText)}
+        >
           Tesoura
         </button>
       </div>
@@ -40,13 +47,22 @@ export const Battle = ({}: EnterRoomProps) => {
       <p>{battleMoves?.player2}</p>
       <div>
         <h1>{battlePlayers?.player2.name}</h1>
-        <button disabled={disabledP2} onClick={() => handleMove("rock")}>
+        <button
+          disabled={disabledP2}
+          onClick={(e: any) => handleMove(e.target.innerText)}
+        >
           Pedra
         </button>
-        <button disabled={disabledP2} onClick={() => handleMove("paper")}>
+        <button
+          disabled={disabledP2}
+          onClick={(e: any) => handleMove(e.target.innerText)}
+        >
           Papel
         </button>
-        <button disabled={disabledP2} onClick={() => handleMove("scissors")}>
+        <button
+          disabled={disabledP2}
+          onClick={(e: any) => handleMove(e.target.innerText)}
+        >
           Tesoura
         </button>
       </div>
