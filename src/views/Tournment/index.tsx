@@ -5,14 +5,14 @@ import { useSocketContext } from "../../contexts/SocketContext"
 interface TournmentProps {}
 
 export const Tournment = ({}: TournmentProps) => {
-  const { setView, tournmentBrackets } = useSocketContext()
+  const { tournmentBrackets, socket, setView } = useSocketContext()
 
   return (
     <BaseLayout>
       <h1>Tournment brackets: </h1>
-      {tournmentBrackets?.map((rows, index) => (
+      {tournmentBrackets?.map((brackets, index) => (
         <div key={index}>
-          {rows.map((player, index) => (
+          {brackets.map((player, index) => (
             <p
               key={player?.id ?? index}
               style={{
@@ -34,6 +34,18 @@ export const Tournment = ({}: TournmentProps) => {
           ))}
         </div>
       ))}
+
+      <br />
+      <br />
+
+      <button
+        onClick={() => {
+          socket?.emit("battle_begin")
+          setView?.("Battle")
+        }}
+      >
+        continue
+      </button>
 
       <br />
       <br />
