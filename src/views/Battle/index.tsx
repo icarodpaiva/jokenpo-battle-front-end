@@ -1,18 +1,33 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { BaseLayout } from "../../layouts/BaseLayout"
 import { useSocketContext } from "../../contexts/SocketContext"
+import { setTimeout } from "timers/promises"
 
 interface EnterRoomProps {}
 
 export const Battle = ({}: EnterRoomProps) => {
   const [playerMove, setPlayerMove] = useState("")
-  const { idPlayer, battlePlayers, socket, battleMoves } = useSocketContext()
+  const {
+    idPlayer,
+    battlePlayers,
+    socket,
+    battleMoves,
+    battleSituation,
+    setBattleSituation,
+    setView
+  } = useSocketContext()
+
+  // reset battle situation
+  useEffect(() => () => setBattleSituation?.(undefined), [])
 
   const isPlayer1 = idPlayer === battlePlayers?.player1.id
   const isPlayer2 = idPlayer === battlePlayers?.player2.id
 
   const disabledP1 = !isPlayer1 || !!playerMove
   const disabledP2 = !isPlayer2 || !!playerMove
+
+  const showBattleSituation =
+    battleSituation && battleSituation.winner && battleSituation.looser
 
   const handleMove = (move: string) => {
     setPlayerMove(move)
@@ -23,22 +38,13 @@ export const Battle = ({}: EnterRoomProps) => {
     <BaseLayout>
       <div>
         <h1>{battlePlayers?.player1.name}</h1>
-        <button
-          disabled={disabledP1}
-          onClick={(e: any) => handleMove(e.target.innerText)}
-        >
+        <button disabled={disabledP1} onClick={() => handleMove("rock")}>
           Pedra
         </button>
-        <button
-          disabled={disabledP1}
-          onClick={(e: any) => handleMove(e.target.innerText)}
-        >
+        <button disabled={disabledP1} onClick={() => handleMove("paper")}>
           Papel
         </button>
-        <button
-          disabled={disabledP1}
-          onClick={(e: any) => handleMove(e.target.innerText)}
-        >
+        <button disabled={disabledP1} onClick={() => handleMove("scissor")}>
           Tesoura
         </button>
       </div>
@@ -47,25 +53,27 @@ export const Battle = ({}: EnterRoomProps) => {
       <p>{battleMoves?.player2}</p>
       <div>
         <h1>{battlePlayers?.player2.name}</h1>
-        <button
-          disabled={disabledP2}
-          onClick={(e: any) => handleMove(e.target.innerText)}
-        >
+        <button disabled={disabledP2} onClick={() => handleMove("rock")}>
           Pedra
         </button>
-        <button
-          disabled={disabledP2}
-          onClick={(e: any) => handleMove(e.target.innerText)}
-        >
+        <button disabled={disabledP2} onClick={() => handleMove("paper")}>
           Papel
         </button>
-        <button
-          disabled={disabledP2}
-          onClick={(e: any) => handleMove(e.target.innerText)}
-        >
+        <button disabled={disabledP2} onClick={() => handleMove("scissor")}>
           Tesoura
         </button>
       </div>
+
+      {showBattleSituation && (
+        <div style={{ background: "aqua", padding: 20 }}>
+          <p>{battleSituation?.winner?.name} ganhou</p>
+          <p>{battleSituation?.looser?.name} perdeu</p>
+        </div>
+      )}
+
+      <br />
+      <br />
+      <button onClick={() => setView?.("Tournment")}>back</button>
     </BaseLayout>
   )
 }

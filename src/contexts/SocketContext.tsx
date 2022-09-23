@@ -4,7 +4,9 @@ import {
   PlayersList,
   TourmentBrackets,
   BattlePlayers,
-  BattleMoves
+  BattleMoves,
+  BattleSituation,
+  BattleDetails
 } from "../types/global"
 import { View } from "../types/View"
 
@@ -19,6 +21,8 @@ interface SocketContextProps {
   tournmentBrackets?: TourmentBrackets[][]
   battlePlayers?: BattlePlayers
   battleMoves?: BattleMoves
+  battleSituation?: BattleSituation
+  setBattleSituation?: (battleSituation?: BattleSituation) => void
 }
 
 const SocketContext = createContext<SocketContextProps | null>(null)
@@ -32,6 +36,7 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
   >([])
   const [battlePlayers, setBattlePlayers] = useState<BattlePlayers>()
   const [battleMoves, setBattleMoves] = useState<BattleMoves>()
+  const [battleSituation, setBattleSituation] = useState<BattleSituation>()
 
   const idPlayer = socket?.id
 
@@ -47,9 +52,14 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
     setView("Battle")
   })
 
-  socket?.on("battle_moves", battle_moves => {
-    setBattleMoves(battle_moves)
-  })
+  socket?.on(
+    "battle_details",
+    ({ battle_moves, battle_situation }: BattleDetails) => {
+      setBattleMoves(battle_moves)
+      setBattleSituation(battle_situation)
+      console.log({ battle_moves, battle_situation })
+    }
+  )
 
   return (
     <SocketContext.Provider
@@ -62,7 +72,8 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
         playersList,
         tournmentBrackets,
         battlePlayers,
-        battleMoves
+        battleMoves,
+        battleSituation
       }}
     >
       {children}

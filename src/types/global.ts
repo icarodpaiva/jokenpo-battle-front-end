@@ -18,3 +18,13 @@ export interface BattleMoves {
   player1: string
   player2: string
 }
+
+export interface BattleSituation {
+  winner: TourmentBrackets | null
+  looser: TourmentBrackets | null
+}
+
+export interface BattleDetails {
+  battle_moves: BattleMoves
+  battle_situation: BattleSituation
+}
