@@ -1,4 +1,4 @@
-export interface PlayersList {
+export interface Players {
   id: string
   name: string
 }

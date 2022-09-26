@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { BaseLayout } from "../../layouts/BaseLayout"
 import { useSocketContext } from "../../contexts/SocketContext"
 
@@ -6,6 +6,17 @@ interface TournmentProps {}
 
 export const Tournment = ({}: TournmentProps) => {
   const { tournmentBrackets, socket, setView } = useSocketContext()
+
+  useEffect(() => {
+    const delayBattleBegin = window.setTimeout(() => {
+      socket?.emit("battle_begin")
+    }, 5000)
+
+    return () => {
+      clearTimeout(delayBattleBegin)
+      setView?.("Battle")
+    }
+  }, [])
 
   return (
     <BaseLayout>
@@ -34,23 +45,6 @@ export const Tournment = ({}: TournmentProps) => {
           ))}
         </div>
       ))}
-
-      <br />
-      <br />
-
-      <button
-        onClick={() => {
-          socket?.emit("battle_begin")
-          setView?.("Battle")
-        }}
-      >
-        continue
-      </button>
-
-      <br />
-      <br />
-
-      <button onClick={() => setView?.("Lobby")}>back</button>
     </BaseLayout>
   )
 }

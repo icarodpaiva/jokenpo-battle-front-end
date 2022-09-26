@@ -12,13 +12,20 @@ export const Battle = ({}: EnterRoomProps) => {
     battlePlayers,
     socket,
     battleMoves,
+    setBattleMoves,
     battleSituation,
     setBattleSituation,
     setView
   } = useSocketContext()
 
   // reset battle situation
-  useEffect(() => () => setBattleSituation?.(undefined), [])
+  useEffect(
+    () => () => {
+      setBattleMoves?.(undefined)
+      setBattleSituation?.(undefined)
+    },
+    []
+  )
 
   const isPlayer1 = idPlayer === battlePlayers?.player1.id
   const isPlayer2 = idPlayer === battlePlayers?.player2.id

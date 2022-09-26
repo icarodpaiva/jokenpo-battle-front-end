@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useState } from "react"
+import React, { createContext, useContext, useState, useEffect } from "react"
 import type { Socket } from "socket.io-client"
 import {
-  PlayersList,
+  Players,
   TourmentBrackets,
   BattlePlayers,
   BattleMoves,
@@ -17,10 +17,11 @@ interface SocketContextProps {
   socket?: Socket
   setSocket?: (socket: Socket) => void
   idPlayer?: string
-  playersList?: PlayersList[]
+  playersList?: Players[]
   tournmentBrackets?: TourmentBrackets[][]
   battlePlayers?: BattlePlayers
   battleMoves?: BattleMoves
+  setBattleMoves?: (battleMoves?: BattleMoves) => void
   battleSituation?: BattleSituation
   setBattleSituation?: (battleSituation?: BattleSituation) => void
 }
@@ -30,7 +31,7 @@ const SocketContext = createContext<SocketContextProps | null>(null)
 export const SocketProvider = ({ children }: SocketContextProps) => {
   const [view, setView] = useState<View>("EnterRoom")
   const [socket, setSocket] = useState<Socket | undefined>()
-  const [playersList, setPlayersList] = useState<PlayersList[]>([])
+  const [playersList, setPlayersList] = useState<Players[]>([])
   const [tournmentBrackets, setTournmentBrackets] = useState<
     TourmentBrackets[][]
   >([])
@@ -40,26 +41,40 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
 
   const idPlayer = socket?.id
 
-  socket?.on("players", players => setPlayersList(players))
+  useEffect(() => {
+    socket?.on("players", (players: Players[]) => setPlayersList(players))
 
-  socket?.on("tournment_brackets", brackets => {
-    setTournmentBrackets(brackets)
-    setView("Tournment")
-  })
+    socket?.on("tournment_brackets", (brackets: TourmentBrackets[][]) => {
+      if (view === "Lobby") {
+        setView("Tournment")
+      } else {
+        setTimeout(() => {
+          setView("Tournment")
+        }, 5000)
+      }
+      setTournmentBrackets(brackets)
+    })
 
-  socket?.on("battle_players", battle_players => {
-    setBattlePlayers(battle_players)
-    setView("Battle")
-  })
+    socket?.on("battle_players", (battle_players: BattlePlayers) => {
+      setBattlePlayers(battle_players)
+      setView("Battle")
+    })
 
-  socket?.on(
-    "battle_details",
-    ({ battle_moves, battle_situation }: BattleDetails) => {
-      setBattleMoves(battle_moves)
-      setBattleSituation(battle_situation)
-      console.log({ battle_moves, battle_situation })
+    socket?.on(
+      "battle_details",
+      ({ battle_moves, battle_situation }: BattleDetails) => {
+        setBattleMoves(battle_moves)
+        setBattleSituation(battle_situation)
+      }
+    )
+
+    return () => {
+      socket?.off("players")
+      socket?.off("tournment_brackets")
+      socket?.off("battle_players")
+      socket?.off("battle_details")
     }
-  )
+  })
 
   return (
     <SocketContext.Provider
@@ -73,7 +88,9 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
         tournmentBrackets,
         battlePlayers,
         battleMoves,
-        battleSituation
+        setBattleMoves,
+        battleSituation,
+        setBattleSituation
       }}
     >
       {children}

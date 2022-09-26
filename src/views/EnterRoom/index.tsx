@@ -8,20 +8,20 @@ interface EnterRoomProps {}
 export const EnterRoom = ({}: EnterRoomProps) => {
   const [errorMsg, setErrorMsg] = useState("")
   const nameRef = useRef<HTMLInputElement | null>(null)
-  const { setView, setSocket } = useSocketContext()
+  const { setView, setSocket, idPlayer } = useSocketContext()
 
   const handleConnect = () => {
-    const name = nameRef.current?.value
-
-    if (!name || name.length <= 2) {
-      setErrorMsg("Please, write a nickname with 3 characteres or more")
+    // prevent double connect
+    if (idPlayer) {
       return
     }
+
+    const name = nameRef.current?.value
 
     setSocket?.(
       io(process.env.GATSBY_API_URL ?? "http://localhost:3000").emit(
         "player_connect",
-        nameRef.current?.value
+        name
       )
     )
 
