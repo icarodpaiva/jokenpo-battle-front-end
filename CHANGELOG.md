@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - [10 - 22/09/17](https://icaropaiva.atlassian.net/browse/JB-10) - Implementation of socket io client
+- [19 - 22/09/17](https://icaropaiva.atlassian.net/browse/JB-19) - Creation of header
 
 ### Changed
 
