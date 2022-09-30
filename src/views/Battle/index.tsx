@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react"
 import { BaseLayout } from "../../layouts/BaseLayout"
 import { useSocketContext } from "../../contexts/SocketContext"
-import { setTimeout } from "timers/promises"
 
 interface EnterRoomProps {}
 
 export const Battle = ({}: EnterRoomProps) => {
   const [playerMove, setPlayerMove] = useState("")
   const {
+    socket,
     idPlayer,
     battlePlayers,
-    socket,
+    setBattlePlayers,
     battleMoves,
     setBattleMoves,
     battleSituation,
-    setBattleSituation,
-    setView
+    setBattleSituation
   } = useSocketContext()
 
   // reset battle situation
   useEffect(
     () => () => {
+      setBattlePlayers?.(undefined)
       setBattleMoves?.(undefined)
       setBattleSituation?.(undefined)
     },
@@ -28,7 +28,7 @@ export const Battle = ({}: EnterRoomProps) => {
   )
 
   const isPlayer1 = idPlayer === battlePlayers?.player1.id
-  const isPlayer2 = idPlayer === battlePlayers?.player2.id
+  const isPlayer2 = idPlayer === battlePlayers?.player2?.id
 
   const disabledP1 = !isPlayer1 || !!playerMove
   const disabledP2 = !isPlayer2 || !!playerMove
@@ -59,7 +59,7 @@ export const Battle = ({}: EnterRoomProps) => {
       <hr />
       <p>{battleMoves?.player2}</p>
       <div>
-        <h1>{battlePlayers?.player2.name}</h1>
+        <h1>{battlePlayers?.player2?.name}</h1>
         <button disabled={disabledP2} onClick={() => handleMove("rock")}>
           Pedra
         </button>
@@ -77,10 +77,6 @@ export const Battle = ({}: EnterRoomProps) => {
           <p>{battleSituation?.looser?.name} perdeu</p>
         </div>
       )}
-
-      <br />
-      <br />
-      <button onClick={() => setView?.("Tournment")}>back</button>
     </BaseLayout>
   )
 }

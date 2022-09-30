@@ -1,31 +1,25 @@
 import React, { useEffect } from "react"
 import { BaseLayout } from "../../layouts/BaseLayout"
 import { useSocketContext } from "../../contexts/SocketContext"
+import { v4 as uuidv4 } from "uuid"
 
 interface TournmentProps {}
 
 export const Tournment = ({}: TournmentProps) => {
-  const { tournmentBrackets, socket, setView } = useSocketContext()
+  const { socket, tournmentBrackets } = useSocketContext()
 
   useEffect(() => {
-    const delayBattleBegin = window.setTimeout(() => {
-      socket?.emit("battle_begin")
-    }, 5000)
-
-    return () => {
-      clearTimeout(delayBattleBegin)
-      setView?.("Battle")
-    }
+    socket?.emit("next_battle")
   }, [])
 
   return (
     <BaseLayout>
       <h1>Tournment brackets: </h1>
-      {tournmentBrackets?.map((brackets, index) => (
-        <div key={index}>
-          {brackets.map((player, index) => (
+      {tournmentBrackets?.map(brackets => (
+        <div key={uuidv4()}>
+          {brackets.map(player => (
             <p
-              key={player?.id ?? index}
+              key={uuidv4()}
               style={{
                 background:
                   player?.winner === true

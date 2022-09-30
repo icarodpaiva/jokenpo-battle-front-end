@@ -2,7 +2,6 @@ import React, { createContext, useContext, useState, useEffect } from "react"
 import type { Socket } from "socket.io-client"
 import {
   Players,
-  TourmentBrackets,
   BattlePlayers,
   BattleMoves,
   BattleSituation,
@@ -18,8 +17,9 @@ interface SocketContextProps {
   setSocket?: (socket: Socket) => void
   idPlayer?: string
   playersList?: Players[]
-  tournmentBrackets?: TourmentBrackets[][]
+  tournmentBrackets?: Players[][]
   battlePlayers?: BattlePlayers
+  setBattlePlayers?: (battlePlayers?: BattlePlayers) => void
   battleMoves?: BattleMoves
   setBattleMoves?: (battleMoves?: BattleMoves) => void
   battleSituation?: BattleSituation
@@ -32,9 +32,7 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
   const [view, setView] = useState<View>("EnterRoom")
   const [socket, setSocket] = useState<Socket | undefined>()
   const [playersList, setPlayersList] = useState<Players[]>([])
-  const [tournmentBrackets, setTournmentBrackets] = useState<
-    TourmentBrackets[][]
-  >([])
+  const [tournmentBrackets, setTournmentBrackets] = useState<Players[][]>([])
   const [battlePlayers, setBattlePlayers] = useState<BattlePlayers>()
   const [battleMoves, setBattleMoves] = useState<BattleMoves>()
   const [battleSituation, setBattleSituation] = useState<BattleSituation>()
@@ -44,35 +42,42 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
   useEffect(() => {
     socket?.on("players", (players: Players[]) => setPlayersList(players))
 
-    socket?.on("tournment_brackets", (brackets: TourmentBrackets[][]) => {
+    socket?.on("tournment_brackets", (brackets: Players[][]) => {
       if (view === "Lobby") {
         setView("Tournment")
-      } else {
-        setTimeout(() => {
-          setView("Tournment")
-        }, 5000)
       }
+
       setTournmentBrackets(brackets)
     })
 
+    let timerToNextBattle: NodeJS.Timeout
     socket?.on("battle_players", (battle_players: BattlePlayers) => {
-      setBattlePlayers(battle_players)
-      setView("Battle")
+      timerToNextBattle = setTimeout(() => {
+        if (!battle_players.player2?.id) {
+          socket?.emit("next_battle")
+          return
+        }
+
+        setBattlePlayers(battle_players)
+        setView("Battle")
+      }, 5000)
     })
 
+    let timerToChangeView: NodeJS.Timeout
     socket?.on(
       "battle_details",
       ({ battle_moves, battle_situation }: BattleDetails) => {
         setBattleMoves(battle_moves)
         setBattleSituation(battle_situation)
+        timerToChangeView = setTimeout(() => setView("Tournment"), 5000)
       }
     )
 
     return () => {
       socket?.off("players")
       socket?.off("tournment_brackets")
-      socket?.off("battle_players")
-      socket?.off("battle_details")
+      socket?.off("battle_players", () => clearTimeout(timerToNextBattle))
+      socket?.off("battle_details", () => clearTimeout(timerToChangeView))
     }
   })
 
@@ -87,6 +92,7 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
         playersList,
         tournmentBrackets,
         battlePlayers,
+        setBattlePlayers,
         battleMoves,
         setBattleMoves,
         battleSituation,
