@@ -20,12 +20,25 @@ export const Battle = ({}: EnterRoomProps) => {
   // reset battle situation
   useEffect(
     () => () => {
-      setBattlePlayers?.(undefined)
       setBattleMoves?.(undefined)
       setBattleSituation?.(undefined)
     },
     []
   )
+
+  useEffect(() => {
+    if (!battleSituation?.draw) {
+      return
+    }
+
+    const delayDraw = setTimeout(() => {
+      setPlayerMove("")
+      setBattleMoves?.(undefined)
+      setBattleSituation?.(undefined)
+    }, 3000)
+
+    return () => clearTimeout(delayDraw)
+  }, [battleSituation?.draw])
 
   const isPlayer1 = idPlayer === battlePlayers?.player1.id
   const isPlayer2 = idPlayer === battlePlayers?.player2?.id
@@ -38,7 +51,7 @@ export const Battle = ({}: EnterRoomProps) => {
 
   const handleMove = (move: string) => {
     setPlayerMove(move)
-    socket?.emit("player_move", { isPlayer1, isPlayer2, move })
+    socket?.emit("player_move", move)
   }
 
   return (
@@ -51,7 +64,7 @@ export const Battle = ({}: EnterRoomProps) => {
         <button disabled={disabledP1} onClick={() => handleMove("paper")}>
           Papel
         </button>
-        <button disabled={disabledP1} onClick={() => handleMove("scissor")}>
+        <button disabled={disabledP1} onClick={() => handleMove("scissors")}>
           Tesoura
         </button>
       </div>
@@ -66,17 +79,21 @@ export const Battle = ({}: EnterRoomProps) => {
         <button disabled={disabledP2} onClick={() => handleMove("paper")}>
           Papel
         </button>
-        <button disabled={disabledP2} onClick={() => handleMove("scissor")}>
+        <button disabled={disabledP2} onClick={() => handleMove("scissors")}>
           Tesoura
         </button>
       </div>
 
-      {showBattleSituation && (
-        <div style={{ background: "aqua", padding: 20 }}>
-          <p>{battleSituation?.winner?.name} ganhou</p>
-          <p>{battleSituation?.looser?.name} perdeu</p>
-        </div>
-      )}
+      <div style={{ background: "aqua", padding: 20 }}>
+        {showBattleSituation && (
+          <>
+            <p>{battleSituation?.winner?.name} ganhou</p>
+            <p>{battleSituation?.looser?.name} perdeu</p>
+          </>
+        )}
+
+        {battleSituation?.draw && <p>Empate</p>}
+      </div>
     </BaseLayout>
   )
 }

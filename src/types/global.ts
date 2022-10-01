@@ -1,12 +1,12 @@
-export interface Players {
+export interface Player {
   id: string
   name: string
-  winner: boolean | null
+  winner?: boolean
 }
 
 export interface BattlePlayers {
-  player1: Players
-  player2?: Players
+  player1: Player
+  player2?: Player
 }
 
 export interface BattleMoves {
@@ -15,8 +15,9 @@ export interface BattleMoves {
 }
 
 export interface BattleSituation {
-  winner: Players | null
-  looser: Players | null
+  winner?: Player
+  looser?: Player
+  draw?: boolean
 }
 
 export interface BattleDetails {

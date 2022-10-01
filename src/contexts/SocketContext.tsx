@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react"
 import type { Socket } from "socket.io-client"
 import {
-  Players,
+  Player,
   BattlePlayers,
   BattleMoves,
   BattleSituation,
@@ -16,8 +16,8 @@ interface SocketContextProps {
   socket?: Socket
   setSocket?: (socket: Socket) => void
   idPlayer?: string
-  playersList?: Players[]
-  tournmentBrackets?: Players[][]
+  playersList?: Player[]
+  tournmentBrackets?: Player[][]
   battlePlayers?: BattlePlayers
   setBattlePlayers?: (battlePlayers?: BattlePlayers) => void
   battleMoves?: BattleMoves
@@ -31,8 +31,8 @@ const SocketContext = createContext<SocketContextProps | null>(null)
 export const SocketProvider = ({ children }: SocketContextProps) => {
   const [view, setView] = useState<View>("EnterRoom")
   const [socket, setSocket] = useState<Socket | undefined>()
-  const [playersList, setPlayersList] = useState<Players[]>([])
-  const [tournmentBrackets, setTournmentBrackets] = useState<Players[][]>([])
+  const [playersList, setPlayersList] = useState<Player[]>([])
+  const [tournmentBrackets, setTournmentBrackets] = useState<Player[][]>([])
   const [battlePlayers, setBattlePlayers] = useState<BattlePlayers>()
   const [battleMoves, setBattleMoves] = useState<BattleMoves>()
   const [battleSituation, setBattleSituation] = useState<BattleSituation>()
@@ -40,9 +40,9 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
   const idPlayer = socket?.id
 
   useEffect(() => {
-    socket?.on("players", (players: Players[]) => setPlayersList(players))
+    socket?.on("players", (players: Player[]) => setPlayersList(players))
 
-    socket?.on("tournment_brackets", (brackets: Players[][]) => {
+    socket?.on("tournment_brackets", (brackets: Player[][]) => {
       if (view === "Lobby") {
         setView("Tournment")
       }
@@ -69,7 +69,10 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
       ({ battle_moves, battle_situation }: BattleDetails) => {
         setBattleMoves(battle_moves)
         setBattleSituation(battle_situation)
-        timerToChangeView = setTimeout(() => setView("Tournment"), 5000)
+
+        if (battle_situation.winner && battle_situation.looser) {
+          timerToChangeView = setTimeout(() => setView("Tournment"), 5000)
+        }
       }
     )
 
