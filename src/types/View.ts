@@ -1,1 +1,1 @@
-export type View = "EnterRoom" | "Lobby"
+export type View = "EnterRoom" | "Lobby" | "Tournment" | "Battle"

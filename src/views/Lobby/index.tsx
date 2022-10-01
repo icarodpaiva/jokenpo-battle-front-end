@@ -1,28 +1,27 @@
-import React from 'react'
-import { BaseLayout } from '../../layouts/BaseLayout'
-import { useSocketContext } from '../../contexts/SocketContext'
-import type { View } from '../../types/View'
+import React from "react"
+import { BaseLayout } from "../../layouts/BaseLayout"
+import { useSocketContext } from "../../contexts/SocketContext"
 
-interface LobbyProps {
-  setView: (view: View) => void
-}
+interface LobbyProps {}
 
-export const Lobby = ({ setView }: LobbyProps) => {
-  const { allPlayers } = useSocketContext()
+export const Lobby = ({}: LobbyProps) => {
+  const { setView, socket, playersList } = useSocketContext()
 
-  if (!allPlayers || allPlayers.length <= 0) {
+  if (!playersList || playersList.length <= 0) {
     return <h3>Loading...</h3>
   }
 
   return (
     <BaseLayout>
-      <h1>Players online: {allPlayers?.length ?? 0}</h1>
+      <h1>Players online: {playersList?.length ?? 0}</h1>
 
-      {allPlayers?.map(({ id, name }) => (
+      {playersList?.map(({ id, name }) => (
         <h2 key={id}>{name}</h2>
       ))}
 
-      <button onClick={() => setView('EnterRoom')}>back</button>
+      <button onClick={() => socket?.emit("tournment_start")}>start</button>
+      <br />
+      <button onClick={() => setView?.("EnterRoom")}>back</button>
     </BaseLayout>
   )
 }
