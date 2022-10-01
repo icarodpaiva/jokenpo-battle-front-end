@@ -18,6 +18,11 @@ export const EnterRoom = ({}: EnterRoomProps) => {
 
     const name = nameRef.current?.value
 
+    if (!name || name.length <= 2) {
+      setErrorMsg("Please, write a nickname with 3 characteres or more")
+      return
+    }
+
     setSocket?.(
       io(process.env.GATSBY_API_URL ?? "http://localhost:3000").emit(
         "player_connect",
