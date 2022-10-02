@@ -21,7 +21,7 @@ export const EnterRoom = () => {
     }
 
     setSocket?.(
-      io(process.env.API_URL ?? "http://localhost:3000").emit(
+      io(process.env.REACT_APP_API_URL ?? "http://localhost:3000").emit(
         "player_connect",
         name
       )
