@@ -1,5 +1,6 @@
 import React from 'react'
 import { Header } from '../components/Header'
+import { Footer } from '../components/Footer'
 
 interface BaseLayoutProps {
   children: React.ReactNode
@@ -8,10 +9,9 @@ interface BaseLayoutProps {
 export const BaseLayout = ({ children }: BaseLayoutProps) => {
   return (
     <>
-      <Header></Header>
-      <header>header</header>
+      <Header />
       {children}
-      <footer>footer</footer>
+      <Footer />
     </>
   )
 }
