@@ -1,4 +1,3 @@
-import React from "react"
 import { useSocketContext } from "../contexts/SocketContext"
 import { EnterRoom } from "../views/EnterRoom"
 import { Lobby } from "../views/Lobby"

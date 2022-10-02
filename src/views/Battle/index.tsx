@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from "react"
-import { BaseLayout } from "../../layouts/BaseLayout"
+import { useEffect, useState } from "react"
 import { useSocketContext } from "../../contexts/SocketContext"
 
-interface EnterRoomProps {}
-
-export const Battle = ({}: EnterRoomProps) => {
+export const Battle = () => {
   const [playerMove, setPlayerMove] = useState("")
   const {
     socket,
     idPlayer,
     battlePlayers,
-    setBattlePlayers,
     battleMoves,
     setBattleMoves,
     battleSituation,
@@ -23,6 +19,7 @@ export const Battle = ({}: EnterRoomProps) => {
       setBattleMoves?.(undefined)
       setBattleSituation?.(undefined)
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 
@@ -38,6 +35,7 @@ export const Battle = ({}: EnterRoomProps) => {
     }, 3000)
 
     return () => clearTimeout(delayDraw)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [battleSituation?.draw])
 
   const isPlayer1 = idPlayer === battlePlayers?.player1.id
@@ -55,7 +53,7 @@ export const Battle = ({}: EnterRoomProps) => {
   }
 
   return (
-    <BaseLayout>
+    <>
       <div>
         <h1>{battlePlayers?.player1.name}</h1>
         <button disabled={disabledP1} onClick={() => handleMove("rock")}>
@@ -94,6 +92,6 @@ export const Battle = ({}: EnterRoomProps) => {
 
         {battleSituation?.draw && <p>Empate</p>}
       </div>
-    </BaseLayout>
+    </>
   )
 }

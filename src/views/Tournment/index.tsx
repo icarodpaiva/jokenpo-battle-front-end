@@ -1,19 +1,17 @@
-import React, { useEffect } from "react"
-import { BaseLayout } from "../../layouts/BaseLayout"
+import { useEffect } from "react"
 import { useSocketContext } from "../../contexts/SocketContext"
 import { v4 as uuidv4 } from "uuid"
 
-interface TournmentProps {}
-
-export const Tournment = ({}: TournmentProps) => {
+export const Tournment = () => {
   const { socket, tournmentBrackets } = useSocketContext()
 
   useEffect(() => {
     socket?.emit("next_battle")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
-    <BaseLayout>
+    <>
       <h1>Tournment brackets: </h1>
       {tournmentBrackets?.map(brackets => (
         <div key={uuidv4()}>
@@ -39,6 +37,6 @@ export const Tournment = ({}: TournmentProps) => {
           ))}
         </div>
       ))}
-    </BaseLayout>
+    </>
   )
 }

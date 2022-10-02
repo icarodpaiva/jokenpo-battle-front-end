@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from "react"
+import { createContext, useContext, useState, useEffect } from "react"
+import type { ReactNode } from "react"
 import type { Socket } from "socket.io-client"
 import {
   Player,
@@ -10,7 +11,7 @@ import {
 import { View } from "../types/View"
 
 interface SocketContextProps {
-  children?: React.ReactNode
+  children?: ReactNode
   view?: View
   setView?: (view: View) => void
   socket?: Socket
