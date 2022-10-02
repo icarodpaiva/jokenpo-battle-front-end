@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react"
 import { useSocketContext } from "../../contexts/SocketContext"
 
-interface EnterRoomProps {}
-
-export const Battle = ({}: EnterRoomProps) => {
+export const Battle = () => {
   const [playerMove, setPlayerMove] = useState("")
   const {
     socket,
     idPlayer,
     battlePlayers,
-    setBattlePlayers,
     battleMoves,
     setBattleMoves,
     battleSituation,
@@ -22,6 +19,7 @@ export const Battle = ({}: EnterRoomProps) => {
       setBattleMoves?.(undefined)
       setBattleSituation?.(undefined)
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 
@@ -37,6 +35,7 @@ export const Battle = ({}: EnterRoomProps) => {
     }, 3000)
 
     return () => clearTimeout(delayDraw)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [battleSituation?.draw])
 
   const isPlayer1 = idPlayer === battlePlayers?.player1.id

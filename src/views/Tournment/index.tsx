@@ -2,13 +2,12 @@ import { useEffect } from "react"
 import { useSocketContext } from "../../contexts/SocketContext"
 import { v4 as uuidv4 } from "uuid"
 
-interface TournmentProps {}
-
-export const Tournment = ({}: TournmentProps) => {
+export const Tournment = () => {
   const { socket, tournmentBrackets } = useSocketContext()
 
   useEffect(() => {
     socket?.emit("next_battle")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

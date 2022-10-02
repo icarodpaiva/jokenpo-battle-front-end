@@ -1,8 +1,6 @@
 import { useSocketContext } from "../../contexts/SocketContext"
 
-interface LobbyProps {}
-
-export const Lobby = ({}: LobbyProps) => {
+export const Lobby = () => {
   const { setView, socket, playersList } = useSocketContext()
 
   if (!playersList || playersList.length <= 0) {

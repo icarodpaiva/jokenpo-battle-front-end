@@ -2,9 +2,7 @@ import { useRef, useState } from "react"
 import { useSocketContext } from "../../contexts/SocketContext"
 import { io } from "socket.io-client"
 
-interface EnterRoomProps {}
-
-export const EnterRoom = ({}: EnterRoomProps) => {
+export const EnterRoom = () => {
   const [errorMsg, setErrorMsg] = useState("")
   const nameRef = useRef<HTMLInputElement | null>(null)
   const { setView, setSocket, idPlayer } = useSocketContext()
