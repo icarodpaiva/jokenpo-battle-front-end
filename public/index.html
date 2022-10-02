@@ -13,6 +13,18 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("./sw.js")
+          .then(function () {
+            console.log("service worker registered")
+          })
+          .catch(function () {
+            console.warn("service worker failed")
+          })
+      }
+    </script>
     <div id="root"></div>
   </body>
 </html>
