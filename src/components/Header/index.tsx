@@ -5,7 +5,12 @@ import "./header.scss"
 export const Header = () => {
   return (
     <header>
-      <img src={imgHeader} className="image-header-mobile" alt="header" />
+      <img
+        src={imgHeader}
+        className="image-header-mobile"
+        alt="header"
+        width="100%"
+      />
       <img
         src={imgHeaderDesktop}
         className="image-header-desktop"
