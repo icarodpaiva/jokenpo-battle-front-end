@@ -1,5 +1,4 @@
-import React, { useEffect } from "react"
-import { BaseLayout } from "../../layouts/BaseLayout"
+import { useEffect } from "react"
 import { useSocketContext } from "../../contexts/SocketContext"
 import { v4 as uuidv4 } from "uuid"
 
@@ -13,7 +12,7 @@ export const Tournment = ({}: TournmentProps) => {
   }, [])
 
   return (
-    <BaseLayout>
+    <>
       <h1>Tournment brackets: </h1>
       {tournmentBrackets?.map(brackets => (
         <div key={uuidv4()}>
@@ -39,6 +38,6 @@ export const Tournment = ({}: TournmentProps) => {
           ))}
         </div>
       ))}
-    </BaseLayout>
+    </>
   )
 }

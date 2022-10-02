@@ -1,4 +1,4 @@
-.header-container {
+header {
   display: flex;
   justify-content: center;
   max-width: 1000px;
@@ -11,7 +11,7 @@
         display: none;
       }
     }
-    
+
     &.image-header-desktop {
       @media screen and (max-width: 769px) {
         display: none;

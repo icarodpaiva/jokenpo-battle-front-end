@@ -1,5 +1,4 @@
-import React, { useRef, useState } from "react"
-import { BaseLayout } from "../../layouts/BaseLayout"
+import { useRef, useState } from "react"
 import { useSocketContext } from "../../contexts/SocketContext"
 import { io } from "socket.io-client"
 
@@ -34,12 +33,10 @@ export const EnterRoom = ({}: EnterRoomProps) => {
   }
 
   return (
-    <BaseLayout>
-      <div>
-        <input type="text" ref={nameRef} />
-        <button onClick={handleConnect}>Connect</button>
-        {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
-      </div>
-    </BaseLayout>
+    <div>
+      <input type="text" ref={nameRef} />
+      <button onClick={handleConnect}>Connect</button>
+      {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
+    </div>
   )
 }

@@ -1,5 +1,3 @@
-import React from "react"
-import { BaseLayout } from "../../layouts/BaseLayout"
 import { useSocketContext } from "../../contexts/SocketContext"
 
 interface LobbyProps {}
@@ -12,7 +10,7 @@ export const Lobby = ({}: LobbyProps) => {
   }
 
   return (
-    <BaseLayout>
+    <>
       <h1>Players online: {playersList?.length ?? 0}</h1>
 
       {playersList?.map(({ id, name }) => (
@@ -22,6 +20,6 @@ export const Lobby = ({}: LobbyProps) => {
       <button onClick={() => socket?.emit("tournment_start")}>start</button>
       <br />
       <button onClick={() => setView?.("EnterRoom")}>back</button>
-    </BaseLayout>
+    </>
   )
 }
