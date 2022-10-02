@@ -3,7 +3,7 @@ import { useSocketContext } from "../../contexts/SocketContext"
 import { v4 as uuidv4 } from "uuid"
 
 export const Tournment = () => {
-  const { socket, tournmentBrackets } = useSocketContext()
+  const { socket, tournmentBrackets, champion } = useSocketContext()
 
   useEffect(() => {
     socket?.emit("next_battle")
@@ -37,6 +37,12 @@ export const Tournment = () => {
           ))}
         </div>
       ))}
+
+      {champion?.name && (
+        <p style={{ padding: 20, background: "pink" }}>
+          <strong color="white">The champion is {champion.name}</strong>
+        </p>
+      )}
     </>
   )
 }

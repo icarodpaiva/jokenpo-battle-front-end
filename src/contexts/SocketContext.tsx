@@ -25,6 +25,7 @@ interface SocketContextProps {
   setBattleMoves?: (battleMoves?: BattleMoves) => void
   battleSituation?: BattleSituation
   setBattleSituation?: (battleSituation?: BattleSituation) => void
+  champion?: Player
 }
 
 const SocketContext = createContext<SocketContextProps | null>(null)
@@ -37,6 +38,7 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
   const [battlePlayers, setBattlePlayers] = useState<BattlePlayers>()
   const [battleMoves, setBattleMoves] = useState<BattleMoves>()
   const [battleSituation, setBattleSituation] = useState<BattleSituation>()
+  const [champion, setChampion] = useState<Player>()
 
   const idPlayer = socket?.id
 
@@ -77,11 +79,16 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
       }
     )
 
+    socket?.on("champion", (game_champion: Player) =>
+      setChampion(game_champion)
+    )
+
     return () => {
       socket?.off("players")
       socket?.off("tournment_brackets")
       socket?.off("battle_players", () => clearTimeout(timerToNextBattle))
       socket?.off("battle_details", () => clearTimeout(timerToChangeView))
+      socket?.off("tournment_brackets")
     }
   })
 
@@ -100,7 +107,8 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
         battleMoves,
         setBattleMoves,
         battleSituation,
-        setBattleSituation
+        setBattleSituation,
+        champion
       }}
     >
       {children}
