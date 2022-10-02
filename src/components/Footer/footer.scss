@@ -2,20 +2,16 @@
   display: flex;
   justify-content: center;
   text-align: center;
-  flex-wrap: wrap;
   max-width: 1000px;
   margin: auto;
   padding: 16px;
 
   p {
+    font-size: 8px;
     line-height: 20px;
 
     @media screen and (min-width: 768px) {
       font-size: 12px;
-    }
-
-    @media screen and (max-width: 769px) {
-      font-size: 8px;
     }
   }
 }
