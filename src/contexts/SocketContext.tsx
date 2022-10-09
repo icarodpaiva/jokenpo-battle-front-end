@@ -45,13 +45,11 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
   useEffect(() => {
     socket?.on("players", (players: Player[]) => setPlayersList(players))
 
-    socket?.on("tournment_brackets", (brackets: Player[][]) => {
-      if (view === "Lobby") {
-        setView("Tournment")
-      }
+    socket?.on("tournment_start", () => setView("Tournment"))
 
+    socket?.on("tournment_brackets", (brackets: Player[][]) =>
       setTournmentBrackets(brackets)
-    })
+    )
 
     let timerToNextBattle: NodeJS.Timeout
     socket?.on("battle_players", (battle_players: BattlePlayers) => {
@@ -85,6 +83,7 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
 
     return () => {
       socket?.off("players")
+      socket?.off("tournment_start")
       socket?.off("tournment_brackets")
       socket?.off("battle_players", () => clearTimeout(timerToNextBattle))
       socket?.off("battle_details", () => clearTimeout(timerToChangeView))
