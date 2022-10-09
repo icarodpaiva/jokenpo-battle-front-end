@@ -20,7 +20,9 @@ export const Tournment = () => {
               key={uuidv4()}
               style={{
                 background:
-                  player?.winner === true
+                  player.disconnected === true
+                    ? "darkviolet"
+                    : player?.winner === true
                     ? "green"
                     : player?.winner === false
                     ? "red"
