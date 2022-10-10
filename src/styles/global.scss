@@ -1,8 +1,21 @@
-@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Press Start 2P", cursive;
+  font-family: 'Press Start 2P', cursive;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+
+  .main-container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
 }
