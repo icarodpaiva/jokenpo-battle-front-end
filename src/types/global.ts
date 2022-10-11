@@ -25,3 +25,12 @@ export interface BattleDetails {
   battle_moves: BattleMoves
   battle_situation: BattleSituation
 }
+
+export interface Statistics {
+  id: string
+  name: string
+  matches: number
+  win: number
+  loose: number
+  draw: number
+}

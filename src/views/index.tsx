@@ -1,8 +1,9 @@
 import { useSocketContext } from "../contexts/SocketContext"
-import { EnterRoom } from "../views/EnterRoom"
-import { Lobby } from "../views/Lobby"
-import { Tournment } from "../views/Tournment"
-import { Battle } from "../views/Battle"
+import { EnterRoom } from "./EnterRoom"
+import { Lobby } from "./Lobby"
+import { Tournment } from "./Tournment"
+import { Battle } from "./Battle"
+import { Statistics } from "./Statistics"
 
 export const ViewsContainer = () => {
   const { view } = useSocketContext()
@@ -13,6 +14,7 @@ export const ViewsContainer = () => {
       {view === "Lobby" && <Lobby />}
       {view === "Tournment" && <Tournment />}
       {view === "Battle" && <Battle />}
+      {view === "Statistics" && <Statistics />}
     </div>
   )
 }
