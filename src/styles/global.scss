@@ -12,9 +12,21 @@
   flex-direction: column;
   justify-content: space-between;
   min-height: 100vh;
+  background: #9d50bb; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #6e48aa,
+    #9d50bb
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #6e48aa,
+    #9d50bb
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
   .main-container {
     display: flex;
+    justify-content: center;
     align-items: center;
     flex: 1;
   }

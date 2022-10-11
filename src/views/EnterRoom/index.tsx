@@ -33,7 +33,7 @@ export const EnterRoom = () => {
 
   return (
     <div className="container-enterRoom">
-      <input type="text" ref={nameRef} />
+      <input type="text" ref={nameRef} placeholder="Nome" />
       <button onClick={handleConnect}>Entrar</button>
       {errorMsg && <p style={{ color: 'red' }}>{errorMsg}</p>}
     </div>

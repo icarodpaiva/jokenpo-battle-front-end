@@ -2,6 +2,12 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  margin: 8px;
+  background-image: url('../../assets/images/gif-jokenpo.gif');
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 30px;
+  object-fit: cover;
 
   input {
     margin: 16px;
@@ -9,13 +15,22 @@
     height: 30px;
     width: 80%;
     border-radius: 15px;
-    font-size: 10px;
+    font-size: 16px;
     text-align: center;
+    color: #ffd067;
+    background-color: #ab87ff;
+
+    &::placeholder {
+      color: black;
+    }
   }
 
   button {
     margin: 16px;
     padding: 8px;
     border-radius: 15px;
+    color: #ffd067;
+    background-color: #ab87ff;
+    font-weight: bold;
   }
 }
