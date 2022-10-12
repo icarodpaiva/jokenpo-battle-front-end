@@ -19,12 +19,16 @@ export const Lobby = () => {
       ))}
 
       {isLeader && (
-        <button onClick={() => socket?.emit('tournment_start')}>
-          Iniciar torneio
+        <button
+          onClick={() => socket?.emit('tournment_start')}
+          className="start-button"
+        >
+          Iniciar batalha
         </button>
       )}
-      <br />
-      <button onClick={() => window.location.reload()}>Voltar</button>
+      <button onClick={() => window.location.reload()} className="back-button">
+        Voltar
+      </button>
     </div>
   )
 }
