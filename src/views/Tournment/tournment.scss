@@ -89,7 +89,12 @@
 
   .champion-alert {
     padding: 10px;
+    font-size: 16px;
     color: #f3f8f2;
+
+    @media screen and (min-width: 768px) {
+      font-size: 20px;
+    }
 
     strong {
       color: #ffd067;
@@ -98,13 +103,23 @@
 
   .buttons-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 70px;
 
-    button {
-      width: fit-content;
+    .close-button {
       padding: 10px;
-      border-radius: 16px;
+      border-radius: 30px;
+      background-color: #fe4a49;
+      line-height: 20px;
+      color: #f3f8f2;
+    }
+
+    .statistics-button {
+      padding: 10px;
+      border-radius: 30px;
+      background-color: #6ab547;
+      line-height: 20px;
+      color: #f3f8f2;
     }
   }
 }
