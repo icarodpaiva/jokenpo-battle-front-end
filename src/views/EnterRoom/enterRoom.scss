@@ -1,0 +1,48 @@
+.enterRoom-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 8px;
+  background-image: url('../../assets/images/gif-jokenpo.gif');
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 30px;
+  object-fit: cover;
+
+  input {
+    margin: 16px;
+    padding: 8px;
+    height: 30px;
+    width: 80%;
+    border-radius: 15px;
+    font-size: 16px;
+    text-align: center;
+    color: #ffd067;
+    background-color: #ab87ff;
+
+    &::placeholder {
+      color: black;
+    }
+  }
+
+  button {
+    margin: 16px;
+    padding: 8px;
+    border-radius: 15px;
+    color: #ffd067;
+    background-color: #ab87ff;
+    font-weight: bold;
+  }
+
+  p {
+    padding: 8px;
+    text-align: center;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    line-height: 2;
+    background-color: black;
+    color: red;
+    font-size: 12px;
+  }
+}
