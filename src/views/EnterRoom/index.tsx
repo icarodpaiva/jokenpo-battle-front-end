@@ -21,6 +21,11 @@ export const EnterRoom = () => {
       return
     }
 
+    if (name.length >= 16) {
+      setErrorMsg('Escreva um nome com menos de 15 caracteres')
+      return
+    }
+
     setSocket?.(
       io(
         process.env.REACT_APP_API_URL ??
