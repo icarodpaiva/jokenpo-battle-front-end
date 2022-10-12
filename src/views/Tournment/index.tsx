@@ -14,61 +14,58 @@ export const Tournment = () => {
   if (!tournmentBrackets || tournmentBrackets.length <= 0) {
     return <h1>Carregando...</h1>
   }
+
   return (
     <div className="tournment-container">
-      <h1>Chaves de torneio: </h1>
-
       <div
         className="brackets-container"
         style={{
           gridTemplateColumns: `repeat(${tournmentBrackets.length}, 1fr)`
         }}
       >
+        {tournmentBrackets?.map((_, index) => (
+          <p className="brackets-phase">{index + 1}ª fase</p>
+        ))}
+
         {tournmentBrackets?.map(brackets => (
           <ul key={uuidv4()}>
-            {brackets.map(({ name, disconnected, winner }) => (
-              <li
-                key={uuidv4()}
-                className={`${
-                  brackets.length === 1 && name
-                    ? "champion"
-                    : disconnected
-                    ? "disconnected"
-                    : winner
-                    ? "winner"
-                    : winner === false
-                    ? "looser"
-                    : undefined
-                }`}
-              >
-                {name}
-              </li>
-            ))}
+            {brackets.map(({ name, disconnected, winner }) => {
+              const playerStatus =
+                brackets.length === 1 && name
+                  ? "champion"
+                  : disconnected
+                  ? "disconnected"
+                  : winner
+                  ? "winner"
+                  : winner === false
+                  ? "looser"
+                  : ""
+
+              return (
+                <li key={uuidv4()} className={playerStatus ?? undefined}>
+                  {name}
+                </li>
+              )
+            })}
           </ul>
         ))}
       </div>
 
       {champion?.name && (
         <>
-          <p style={{ padding: 20, background: "pink" }}>
-            <strong color="white">The champion is {champion.name}</strong>
+          <p className="champion-alert">
+            O vencedor é <strong>{champion.name}</strong>
           </p>
 
-          <p>
-            <button
-              style={{ padding: 5 }}
-              onClick={() => window.location.reload()}
-            >
-              Close Game
+          <div className="buttons-container">
+            <button onClick={() => window.location.reload()}>
+              Fechar jogo
             </button>
 
-            <button
-              style={{ padding: 5 }}
-              onClick={() => setView?.("Statistics")}
-            >
-              Go to statistics
+            <button onClick={() => setView?.("Statistics")}>
+              Ir para estatísticas
             </button>
-          </p>
+          </div>
         </>
       )}
     </div>
