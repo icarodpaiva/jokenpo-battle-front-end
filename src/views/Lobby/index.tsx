@@ -1,10 +1,11 @@
-import { useSocketContext } from "../../contexts/SocketContext"
+import { useSocketContext } from '../../contexts/SocketContext'
+import './lobby.scss'
 
 export const Lobby = () => {
   const { playersList, idPlayer, socket } = useSocketContext()
 
   if (!playersList || playersList.length <= 0) {
-    return <h3>Loading...</h3>
+    return <h3>Carregando...</h3>
   }
 
   const isLeader = playersList[0].id === idPlayer
@@ -18,7 +19,7 @@ export const Lobby = () => {
       ))}
 
       {isLeader && (
-        <button onClick={() => socket?.emit("tournment_start")}>
+        <button onClick={() => socket?.emit('tournment_start')}>
           Iniciar torneio
         </button>
       )}

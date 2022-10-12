@@ -22,10 +22,10 @@ export const EnterRoom = () => {
     }
 
     setSocket?.(
-      io(process.env.REACT_APP_API_URL ?? 'http://localhost:3000').emit(
-        'player_connect',
-        name
-      )
+      io(
+        process.env.REACT_APP_API_URL ??
+          'https://jokenpo-battle-back-end.herokuapp.com/'
+      ).emit('player_connect', name)
     )
 
     setView?.('Lobby')
