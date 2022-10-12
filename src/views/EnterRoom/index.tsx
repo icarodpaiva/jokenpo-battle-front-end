@@ -17,7 +17,7 @@ export const EnterRoom = () => {
     const name = nameRef.current?.value
 
     if (!name || name.length <= 2) {
-      setErrorMsg('Please, write a nickname with 3 characteres or more')
+      setErrorMsg('Escreva um nome com pelo menos 3 caracteres')
       return
     }
 
@@ -32,10 +32,10 @@ export const EnterRoom = () => {
   }
 
   return (
-    <div className="container-enterRoom">
+    <div className="enterRoom-container">
       <input type="text" ref={nameRef} placeholder="Nome" />
       <button onClick={handleConnect}>Entrar</button>
-      {errorMsg && <p style={{ color: 'red' }}>{errorMsg}</p>}
+      {errorMsg && <p>{errorMsg}</p>}
     </div>
   )
 }
