@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { useSocketContext } from "../../contexts/SocketContext"
 import { v4 as uuidv4 } from "uuid"
+import "./tournment.scss"
 
 export const Tournment = () => {
   const { socket, tournmentBrackets, champion, setView } = useSocketContext()
@@ -10,37 +11,42 @@ export const Tournment = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  if (!tournmentBrackets || tournmentBrackets.length <= 0) {
+    return <h1>Carregando...</h1>
+  }
   return (
-    <>
-      <h1>Tournment brackets: </h1>
-      {tournmentBrackets?.map(brackets => (
-        <div key={uuidv4()}>
-          {brackets.map(player => (
-            <p
-              key={uuidv4()}
-              style={{
-                background:
-                  brackets.length === 1 && player.name
-                    ? "green"
-                    : player.disconnected === true
-                    ? "darkviolet"
-                    : player.winner === true
-                    ? "green"
-                    : player.winner === false
-                    ? "red"
-                    : undefined,
-                border: "1px solid black",
-                display: "inline-block",
-                padding: "10px",
-                minWidth: "60px",
-                minHeight: "20px"
-              }}
-            >
-              {player.name}
-            </p>
-          ))}
-        </div>
-      ))}
+    <div className="tournment-container">
+      <h1>Chaves de torneio: </h1>
+
+      <div
+        className="brackets-container"
+        style={{
+          gridTemplateColumns: `repeat(${tournmentBrackets.length}, 1fr)`
+        }}
+      >
+        {tournmentBrackets?.map(brackets => (
+          <ul key={uuidv4()}>
+            {brackets.map(({ name, disconnected, winner }) => (
+              <li
+                key={uuidv4()}
+                className={`${
+                  brackets.length === 1 && name
+                    ? "champion"
+                    : disconnected
+                    ? "disconnected"
+                    : winner
+                    ? "winner"
+                    : winner === false
+                    ? "looser"
+                    : undefined
+                }`}
+              >
+                {name}
+              </li>
+            ))}
+          </ul>
+        ))}
+      </div>
 
       {champion?.name && (
         <>
@@ -65,6 +71,6 @@ export const Tournment = () => {
           </p>
         </>
       )}
-    </>
+    </div>
   )
 }

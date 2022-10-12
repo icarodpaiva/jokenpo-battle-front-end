@@ -1,0 +1,43 @@
+.tournment-container {
+  font-size: 6px;
+  text-align: center;
+
+  .brackets-container {
+    display: grid;
+    gap: 10px;
+
+    ul,
+    li {
+      list-style: none;
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+
+    li {
+      width: 100%;
+      min-height: 20px;
+      border: 1px solid black;
+      padding: 4px;
+
+      &:not(:first-child) {
+        margin-top: 1px;
+      }
+
+      &.champion {
+      }
+
+      &.disconnected {
+      }
+
+      &.winner {
+      }
+
+      &.looser {
+      }
+    }
+  }
+}
