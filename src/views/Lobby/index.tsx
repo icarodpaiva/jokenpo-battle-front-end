@@ -12,23 +12,32 @@ export const Lobby = () => {
 
   return (
     <div className="lobby-container">
-      <h1>Jogadores: {playersList?.length ?? 0}</h1>
+      <div className="playersQuantity-container">
+        <h1>Jogadores: {playersList?.length ?? 0}</h1>
+      </div>
 
-      {playersList?.map(({ id, name }) => (
-        <h2 key={id}>{name}</h2>
-      ))}
+      <div className="names-container">
+        {playersList?.map(({ id, name }) => (
+          <h2 key={id}>{name}</h2>
+        ))}
+      </div>
 
-      {isLeader && (
+      <div className="buttons-container">
         <button
-          onClick={() => socket?.emit('tournment_start')}
-          className="start-button"
+          onClick={() => window.location.reload()}
+          className="back-button"
         >
-          Iniciar batalha
+          Voltar
         </button>
-      )}
-      <button onClick={() => window.location.reload()} className="back-button">
-        Voltar
-      </button>
+        {isLeader && (
+          <button
+            onClick={() => socket?.emit('tournment_start')}
+            className="start-button"
+          >
+            Iniciar batalha
+          </button>
+        )}
+      </div>
     </div>
   )
 }
