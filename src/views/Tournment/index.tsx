@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { useSocketContext } from "../../contexts/SocketContext"
 import { v4 as uuidv4 } from "uuid"
+import "./tournment.scss"
 
 export const Tournment = () => {
   const { socket, tournmentBrackets, champion, setView } = useSocketContext()
@@ -10,61 +11,63 @@ export const Tournment = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  if (!tournmentBrackets || tournmentBrackets.length <= 0) {
+    return <h1>Carregando...</h1>
+  }
+
   return (
-    <>
-      <h1>Tournment brackets: </h1>
-      {tournmentBrackets?.map(brackets => (
-        <div key={uuidv4()}>
-          {brackets.map(player => (
-            <p
-              key={uuidv4()}
-              style={{
-                background:
-                  brackets.length === 1 && player.name
-                    ? "green"
-                    : player.disconnected === true
-                    ? "darkviolet"
-                    : player.winner === true
-                    ? "green"
-                    : player.winner === false
-                    ? "red"
-                    : undefined,
-                border: "1px solid black",
-                display: "inline-block",
-                padding: "10px",
-                minWidth: "60px",
-                minHeight: "20px"
-              }}
-            >
-              {player.name}
-            </p>
-          ))}
-        </div>
-      ))}
+    <div className="tournment-container">
+      <div
+        className="brackets-container"
+        style={{
+          gridTemplateColumns: `repeat(${tournmentBrackets.length}, 1fr)`
+        }}
+      >
+        {tournmentBrackets?.map((_, index) => (
+          <p className="brackets-phase">{index + 1}ª fase</p>
+        ))}
+
+        {tournmentBrackets?.map(brackets => (
+          <ul key={uuidv4()}>
+            {brackets.map(({ name, disconnected, winner }) => {
+              const playerStatus =
+                brackets.length === 1 && name
+                  ? "champion"
+                  : disconnected
+                  ? "disconnected"
+                  : winner
+                  ? "winner"
+                  : winner === false
+                  ? "looser"
+                  : ""
+
+              return (
+                <li key={uuidv4()} className={playerStatus ?? undefined}>
+                  {name}
+                </li>
+              )
+            })}
+          </ul>
+        ))}
+      </div>
 
       {champion?.name && (
         <>
-          <p style={{ padding: 20, background: "pink" }}>
-            <strong color="white">The champion is {champion.name}</strong>
+          <p className="champion-alert">
+            O vencedor é <strong>{champion.name}</strong>
           </p>
 
-          <p>
-            <button
-              style={{ padding: 5 }}
-              onClick={() => window.location.reload()}
-            >
-              Close Game
+          <div className="buttons-container">
+            <button onClick={() => window.location.reload()}>
+              Fechar jogo
             </button>
 
-            <button
-              style={{ padding: 5 }}
-              onClick={() => setView?.("Statistics")}
-            >
-              Go to statistics
+            <button onClick={() => setView?.("Statistics")}>
+              Ir para estatísticas
             </button>
-          </p>
+          </div>
         </>
       )}
-    </>
+    </div>
   )
 }
