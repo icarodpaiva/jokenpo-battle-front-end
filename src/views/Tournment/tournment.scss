@@ -1,3 +1,21 @@
+.loading-tourmment {
+  border: 16px solid #ffd067;
+  width: 120px;
+  height: 120px;
+  border-top: 16px solid #494368;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
+
 .tournment-container {
   width: 100%;
   font-size: 6px;
