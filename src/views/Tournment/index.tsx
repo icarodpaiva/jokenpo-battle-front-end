@@ -12,7 +12,7 @@ export const Tournment = () => {
   }, [])
 
   if (!tournmentBrackets || tournmentBrackets.length <= 0) {
-    return <h1>Carregando...</h1>
+    return <div className="loading-tourmment"></div>
   }
 
   return (

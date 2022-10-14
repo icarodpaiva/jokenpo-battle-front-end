@@ -5,7 +5,7 @@ export const Lobby = () => {
   const { playersList, idPlayer, socket } = useSocketContext()
 
   if (!playersList || playersList.length <= 0) {
-    return <h3>Carregando...</h3>
+    return <div className="loading"></div>
   }
 
   const isLeader = playersList[0].id === idPlayer
