@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react"
-import { useSocketContext } from "../../contexts/SocketContext"
+import { useEffect, useState } from 'react'
+import { useSocketContext } from '../../contexts/SocketContext'
+import { BattleButtons } from '../../components/BattleButtons'
 
 export const Battle = () => {
-  const [playerMove, setPlayerMove] = useState("")
+  const [playerMove, setPlayerMove] = useState('')
   const {
     socket,
     idPlayer,
@@ -29,7 +30,7 @@ export const Battle = () => {
     }
 
     const delayDraw = setTimeout(() => {
-      setPlayerMove("")
+      setPlayerMove('')
       setBattleMoves?.(undefined)
       setBattleSituation?.(undefined)
     }, 3000)
@@ -41,48 +42,31 @@ export const Battle = () => {
   const isPlayer1 = idPlayer === battlePlayers?.player1.id
   const isPlayer2 = idPlayer === battlePlayers?.player2?.id
 
-  const disabledP1 = !isPlayer1 || !!playerMove
-  const disabledP2 = !isPlayer2 || !!playerMove
+  const disabled = !isPlayer1 || !isPlayer2 || !!playerMove
 
   const showBattleSituation =
     battleSituation && battleSituation.winner && battleSituation.looser
 
   const handleMove = (move: string) => {
     setPlayerMove(move)
-    socket?.emit("player_move", move)
+    socket?.emit('player_move', move)
   }
 
   return (
     <>
       <div>
         <h1>{battlePlayers?.player1.name}</h1>
-        <button disabled={disabledP1} onClick={() => handleMove("rock")}>
-          Pedra
-        </button>
-        <button disabled={disabledP1} onClick={() => handleMove("paper")}>
-          Papel
-        </button>
-        <button disabled={disabledP1} onClick={() => handleMove("scissors")}>
-          Tesoura
-        </button>
+        <BattleButtons disabled={disabled} handleMove={handleMove} />
       </div>
       <p>{battleMoves?.player1}</p>
       <hr />
       <p>{battleMoves?.player2}</p>
       <div>
         <h1>{battlePlayers?.player2?.name}</h1>
-        <button disabled={disabledP2} onClick={() => handleMove("rock")}>
-          Pedra
-        </button>
-        <button disabled={disabledP2} onClick={() => handleMove("paper")}>
-          Papel
-        </button>
-        <button disabled={disabledP2} onClick={() => handleMove("scissors")}>
-          Tesoura
-        </button>
+        <BattleButtons disabled={disabled} handleMove={handleMove} />
       </div>
 
-      <div style={{ background: "aqua", padding: 20 }}>
+      <div style={{ background: 'aqua', padding: 20 }}>
         {showBattleSituation && (
           <>
             <p>{battleSituation?.winner?.name} ganhou</p>
