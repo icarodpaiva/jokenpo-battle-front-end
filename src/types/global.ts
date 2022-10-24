@@ -10,9 +10,11 @@ export interface BattlePlayers {
   player2?: Player
 }
 
+export type Moves = "rock" | "paper" | "scissors"
+
 export interface BattleMoves {
-  player1: string
-  player2: string
+  player1: Moves
+  player2: Moves
 }
 
 export interface BattleSituation {

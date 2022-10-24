@@ -1,0 +1,22 @@
+.battleBoard-container {
+  .battleButtons-container {
+    display: flex;
+    justify-content: center;
+
+    button {
+      outline: none;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+
+      &:disabled {
+        opacity: 0.5;
+      }
+
+      img {
+        width: 100%;
+        max-width: 200px;
+      }
+    }
+  }
+}
