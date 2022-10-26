@@ -1,0 +1,19 @@
+.battleSituation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+
+  img {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  p {
+    color: #ffd067;
+    text-align: center;
+  }
+}

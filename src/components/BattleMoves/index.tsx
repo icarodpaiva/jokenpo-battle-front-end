@@ -1,18 +1,15 @@
 import { useEffect, useRef, useState } from "react"
 import type { Images } from "../BattleBoard"
-import type { BattleMoves } from "../../types/global"
+import type { BattleMoves as BattleMovesType } from "../../types/global"
 import pow from "../../assets/images/pow.png"
 import "./battleMoves.scss"
 
 interface BattleMovesProps {
   images: Images
-  battleMoves: BattleMoves
+  battleMoves: BattleMovesType
 }
 
-export const BattleMovesPlayers = ({
-  images,
-  battleMoves
-}: BattleMovesProps) => {
+export const BattleMoves = ({ images, battleMoves }: BattleMovesProps) => {
   const [showPow, setShowPow] = useState(false)
   const img1Ref = useRef<HTMLImageElement | null>(null)
   const img2Ref = useRef<HTMLImageElement | null>(null)
@@ -57,22 +54,20 @@ export const BattleMovesPlayers = ({
   }, [showPow])
 
   return (
-    <div className="battleMoves-modal">
-      <div className="battleMoves-container">
-        <img
-          src={images[battleMoves.player1]}
-          alt={battleMoves?.player1}
-          ref={img1Ref}
-        />
-        {showPow && (
-          <img src={pow} alt="pow" className="pow-image" ref={imgPowRef} />
-        )}
-        <img
-          src={images[battleMoves.player2]}
-          alt={battleMoves?.player2}
-          ref={img2Ref}
-        />
-      </div>
+    <div className="battleMoves-container">
+      <img
+        src={images[battleMoves.player1]}
+        alt={battleMoves?.player1}
+        ref={img1Ref}
+      />
+      {showPow && (
+        <img src={pow} alt="pow" className="pow-image" ref={imgPowRef} />
+      )}
+      <img
+        src={images[battleMoves.player2]}
+        alt={battleMoves?.player2}
+        ref={img2Ref}
+      />
     </div>
   )
 }

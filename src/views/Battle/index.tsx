@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { useSocketContext } from "../../contexts/SocketContext"
 import { BattleBoard } from "../../components/BattleBoard"
-import { BattleMovesPlayers } from "../../components/BattleMoves"
+import { BattleMoves } from "../../components/BattleMoves"
+import { BattleSituation } from "../../components/BattleSituation"
 import rock from "../../assets/images/rock.png"
 import paper from "../../assets/images/paper.png"
 import scissors from "../../assets/images/scissors.png"
@@ -51,13 +52,21 @@ export const Battle = () => {
       return
     }
 
+    const delayShowBattleSituation = setTimeout(() => {
+      setShowBattleSituation(true)
+    }, 2500)
+
     const delayPlayAgain = setTimeout(() => {
       setPlayerMove("")
       setBattleMoves?.(undefined)
       setBattleSituation?.(undefined)
-    }, 3000)
+      setShowBattleSituation(false)
+    }, 5500)
 
-    return () => clearTimeout(delayPlayAgain)
+    return () => {
+      clearTimeout(delayShowBattleSituation)
+      clearTimeout(delayPlayAgain)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [battleSituation?.draw])
 
@@ -83,20 +92,15 @@ export const Battle = () => {
         images={images}
       />
 
-      {showMoves && (
-        <BattleMovesPlayers images={images} battleMoves={battleMoves} />
+      {showMoves && !showBattleSituation && (
+        <div className="battle-modal">
+          <BattleMoves images={images} battleMoves={battleMoves} />
+        </div>
       )}
 
       {showBattleSituation && (
-        <div className="battleSituation-container">
-          {battleSituation?.winner?.name && (
-            <>
-              {/* remove this mock later, when the backend return the player option */}
-              <img src={images["paper"]} alt="paper" />
-              <p>{battleSituation?.winner?.name}</p>
-            </>
-          )}
-          {battleSituation?.draw && <p>Empate</p>}
+        <div className="battle-modal">
+          <BattleSituation battleSituation={battleSituation} images={images} />
         </div>
       )}
 

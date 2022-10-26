@@ -1,13 +1,13 @@
-import { useEffect } from 'react'
-import { useSocketContext } from '../../contexts/SocketContext'
-import { v4 as uuidv4 } from 'uuid'
-import './tournment.scss'
+import { useEffect } from "react"
+import { useSocketContext } from "../../contexts/SocketContext"
+import { v4 as uuidv4 } from "uuid"
+import "./tournment.scss"
 
 export const Tournment = () => {
   const { socket, tournmentBrackets, champion, setView } = useSocketContext()
 
   useEffect(() => {
-    socket?.emit('next_battle')
+    socket?.emit("next_battle")
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -24,7 +24,9 @@ export const Tournment = () => {
         }}
       >
         {tournmentBrackets?.map((_, index) => (
-          <p className="brackets-phase">{index + 1}ª fase</p>
+          <p key={index} className="brackets-phase">
+            {index + 1}ª fase
+          </p>
         ))}
 
         {tournmentBrackets?.map(brackets => (
@@ -32,14 +34,14 @@ export const Tournment = () => {
             {brackets.map(({ name, disconnected, winner }) => {
               const playerStatus =
                 brackets.length === 1 && name
-                  ? 'champion'
+                  ? "champion"
                   : disconnected
-                  ? 'disconnected'
+                  ? "disconnected"
                   : winner
-                  ? 'winner'
+                  ? "winner"
                   : winner === false
-                  ? 'looser'
-                  : ''
+                  ? "looser"
+                  : ""
 
               return (
                 <li key={uuidv4()} className={playerStatus ?? undefined}>
@@ -66,7 +68,7 @@ export const Tournment = () => {
             </button>
 
             <button
-              onClick={() => setView?.('Statistics')}
+              onClick={() => setView?.("Statistics")}
               className="statistics-button"
             >
               Ir para estatísticas

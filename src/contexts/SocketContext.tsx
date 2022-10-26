@@ -75,7 +75,7 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
         setBattleSituation(battle_situation)
 
         if (battle_situation.winner && battle_situation.looser) {
-          timerToChangeView = setTimeout(() => setView("Tournment"), 7000)
+          timerToChangeView = setTimeout(() => setView("Tournment"), 6500)
         }
       }
     )
