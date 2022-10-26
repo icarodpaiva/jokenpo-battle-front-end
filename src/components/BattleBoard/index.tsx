@@ -25,7 +25,11 @@ export const BattleBoard = ({
       <h1>{playerName}</h1>
       <div className="battleButtons-container">
         {Object.keys(images).map(move => (
-          <button disabled={disabled} onClick={() => handleMove(move)}>
+          <button
+            key={move}
+            disabled={disabled}
+            onClick={() => handleMove(move)}
+          >
             <img src={images[move as Moves]} alt={move} />
           </button>
         ))}

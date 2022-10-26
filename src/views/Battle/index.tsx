@@ -48,7 +48,7 @@ export const Battle = () => {
   )
 
   useEffect(() => {
-    if (!battleSituation?.draw) {
+    if (!battleSituation?.draw?.draw) {
       return
     }
 
@@ -68,7 +68,7 @@ export const Battle = () => {
       clearTimeout(delayPlayAgain)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [battleSituation?.draw])
+  }, [battleSituation?.draw?.draw])
 
   useEffect(() => {
     if (!battleSituation?.winner) {

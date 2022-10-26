@@ -18,9 +18,12 @@ export interface BattleMoves {
 }
 
 export interface BattleSituation {
-  winner?: Player
-  looser?: Player
-  draw?: boolean
+  winner?: Player & { move?: Moves }
+  looser?: Player & { move?: Moves }
+  draw?: {
+    draw: boolean
+    move: Moves
+  }
 }
 
 export interface BattleDetails {

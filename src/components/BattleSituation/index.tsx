@@ -15,20 +15,28 @@ export const BattleSituation = ({
     <div className="battleSituation-container">
       {battleSituation?.winner?.name && (
         <>
-          {/* remove this mock later, when the backend return the player move */}
-          <img src={images["paper"]} alt="paper" />
+          <img
+            src={images[battleSituation.winner.move ?? "scissors"]}
+            alt="paper"
+          />
           <p>{battleSituation.winner.name} venceu</p>
         </>
       )}
 
       {battleSituation?.draw && (
         <>
-          {/* remove this mock later, when the backend return the player move */}
-          <img src={images["paper"]} alt="paper" />
+          <img
+            src={images[battleSituation.draw.move ?? "scissors"]}
+            alt="paper"
+          />
+
           <p>EMPATE</p>
           <p>haverá uma nova batalha</p>
-          {/* remove this mock later, when the backend return the player move */}
-          <img src={images["paper"]} alt="paper" />
+
+          <img
+            src={images[battleSituation.draw.move ?? "scissors"]}
+            alt="paper"
+          />
         </>
       )}
     </div>
