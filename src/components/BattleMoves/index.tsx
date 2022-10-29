@@ -1,19 +1,26 @@
 import { useEffect, useRef, useState } from "react"
-import type { Images } from "../BattleBoard"
+import rock from "../../assets/images/battle/rock.gif"
+import paper from "../../assets/images/battle/paper.gif"
+import scissors from "../../assets/images/battle/scissors.gif"
+import pow from "../../assets/images/battle/pow.png"
 import type { BattleMoves as BattleMovesType } from "../../types/global"
-import pow from "../../assets/images/pow.png"
 import "./battleMoves.scss"
 
 interface BattleMovesProps {
-  images: Images
   battleMoves: BattleMovesType
 }
 
-export const BattleMoves = ({ images, battleMoves }: BattleMovesProps) => {
+export const BattleMoves = ({ battleMoves }: BattleMovesProps) => {
   const [showPow, setShowPow] = useState(false)
   const img1Ref = useRef<HTMLImageElement | null>(null)
   const img2Ref = useRef<HTMLImageElement | null>(null)
   const imgPowRef = useRef<HTMLImageElement | null>(null)
+
+  const images = {
+    rock,
+    paper,
+    scissors
+  }
 
   useEffect(() => {
     img1Ref.current?.animate(

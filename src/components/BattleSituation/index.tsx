@@ -1,16 +1,16 @@
+import rock from "../../assets/images/battle-situation/rock.png"
+import paper from "../../assets/images/battle-situation/paper.png"
+import scissors from "../../assets/images/battle-situation/scissors.png"
 import type { BattleSituation as BattleSituationType } from "../../types/global"
-import type { Images } from "../BattleBoard"
 import "./battleSituation.scss"
 
 interface BattleSituationProps {
   battleSituation?: BattleSituationType
-  images: Images
 }
 
-export const BattleSituation = ({
-  battleSituation,
-  images
-}: BattleSituationProps) => {
+export const BattleSituation = ({ battleSituation }: BattleSituationProps) => {
+  const images = { rock, paper, scissors }
+
   return (
     <div className="battleSituation-container">
       {battleSituation?.winner?.name && (

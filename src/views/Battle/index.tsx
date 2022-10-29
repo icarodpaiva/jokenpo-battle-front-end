@@ -3,9 +3,6 @@ import { useSocketContext } from "../../contexts/SocketContext"
 import { BattleBoard } from "../../components/BattleBoard"
 import { BattleMoves } from "../../components/BattleMoves"
 import { BattleSituation } from "../../components/BattleSituation"
-import rock from "../../assets/images/rock.png"
-import paper from "../../assets/images/paper.png"
-import scissors from "../../assets/images/scissors.png"
 import "./battle.scss"
 
 export const Battle = () => {
@@ -21,8 +18,6 @@ export const Battle = () => {
     battleSituation,
     setBattleSituation
   } = useSocketContext()
-
-  const images = { rock, paper, scissors }
 
   const isPlayer1 = idPlayer === battlePlayers?.player1.id
   const isPlayer2 = idPlayer === battlePlayers?.player2?.id
@@ -89,18 +84,17 @@ export const Battle = () => {
         playerName={battlePlayers?.player1.name}
         disabled={player1Disabled}
         handleMove={handleMove}
-        images={images}
       />
 
       {showMoves && !showBattleSituation && (
         <div className="battle-modal">
-          <BattleMoves images={images} battleMoves={battleMoves} />
+          <BattleMoves battleMoves={battleMoves} />
         </div>
       )}
 
       {showBattleSituation && (
         <div className="battle-modal">
-          <BattleSituation battleSituation={battleSituation} images={images} />
+          <BattleSituation battleSituation={battleSituation} />
         </div>
       )}
 
@@ -108,7 +102,6 @@ export const Battle = () => {
         playerName={battlePlayers?.player2?.name}
         disabled={player2Disabled}
         handleMove={handleMove}
-        images={images}
       />
     </div>
   )

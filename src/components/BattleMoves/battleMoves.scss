@@ -7,7 +7,11 @@
 
   img {
     width: 100%;
-    max-width: 200px;
+    max-width: 100px;
+
+    @media screen and (min-width: 767px) {
+      max-width: 200px;
+    }
 
     &.pow-image {
       position: absolute;
