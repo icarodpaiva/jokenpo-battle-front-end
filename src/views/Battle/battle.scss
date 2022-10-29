@@ -1,0 +1,19 @@
+.battle-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .battle-modal {
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+}

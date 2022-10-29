@@ -1,0 +1,32 @@
+.battleMoves-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+
+  img {
+    width: 100%;
+    max-width: 100px;
+
+    @media screen and (min-width: 767px) {
+      max-width: 200px;
+    }
+
+    &.pow-image {
+      position: absolute;
+      animation: scale-up-center 0.4s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+    }
+  }
+}
+
+@keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}

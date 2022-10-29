@@ -10,15 +10,20 @@ export interface BattlePlayers {
   player2?: Player
 }
 
+export type Moves = "rock" | "paper" | "scissors"
+
 export interface BattleMoves {
-  player1: string
-  player2: string
+  player1: Moves
+  player2: Moves
 }
 
 export interface BattleSituation {
-  winner?: Player
-  looser?: Player
-  draw?: boolean
+  winner?: Player & { move?: Moves }
+  looser?: Player & { move?: Moves }
+  draw?: {
+    draw: boolean
+    move: Moves
+  }
 }
 
 export interface BattleDetails {

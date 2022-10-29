@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react"
 import { useSocketContext } from "../../contexts/SocketContext"
+import { BattleBoard } from "../../components/BattleBoard"
+import { BattleMoves } from "../../components/BattleMoves"
+import { BattleSituation } from "../../components/BattleSituation"
+import "./battle.scss"
 
 export const Battle = () => {
   const [playerMove, setPlayerMove] = useState("")
+  const [showBattleSituation, setShowBattleSituation] = useState(false)
+
   const {
     socket,
     idPlayer,
@@ -12,6 +18,19 @@ export const Battle = () => {
     battleSituation,
     setBattleSituation
   } = useSocketContext()
+
+  const isPlayer1 = idPlayer === battlePlayers?.player1.id
+  const isPlayer2 = idPlayer === battlePlayers?.player2?.id
+
+  const player1Disabled = !isPlayer1 || !!playerMove
+  const player2Disabled = !isPlayer2 || !!playerMove
+
+  const handleMove = (move: string) => {
+    setPlayerMove(move)
+    socket?.emit("player_move", move)
+  }
+
+  const showMoves = !!(battleMoves?.player1 && battleMoves?.player2)
 
   // reset battle situation
   useEffect(
@@ -24,74 +43,66 @@ export const Battle = () => {
   )
 
   useEffect(() => {
-    if (!battleSituation?.draw) {
+    if (!battleSituation?.draw?.draw) {
       return
     }
 
-    const delayDraw = setTimeout(() => {
+    const delayShowBattleSituation = setTimeout(() => {
+      setShowBattleSituation(true)
+    }, 2500)
+
+    const delayPlayAgain = setTimeout(() => {
       setPlayerMove("")
       setBattleMoves?.(undefined)
       setBattleSituation?.(undefined)
-    }, 3000)
+      setShowBattleSituation(false)
+    }, 5500)
 
-    return () => clearTimeout(delayDraw)
+    return () => {
+      clearTimeout(delayShowBattleSituation)
+      clearTimeout(delayPlayAgain)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [battleSituation?.draw])
+  }, [battleSituation?.draw?.draw])
 
-  const isPlayer1 = idPlayer === battlePlayers?.player1.id
-  const isPlayer2 = idPlayer === battlePlayers?.player2?.id
+  useEffect(() => {
+    if (!battleSituation?.winner) {
+      return
+    }
 
-  const disabledP1 = !isPlayer1 || !!playerMove
-  const disabledP2 = !isPlayer2 || !!playerMove
+    const delayShowBattleSituation = setTimeout(() => {
+      setShowBattleSituation(true)
+    }, 2500)
 
-  const showBattleSituation =
-    battleSituation && battleSituation.winner && battleSituation.looser
-
-  const handleMove = (move: string) => {
-    setPlayerMove(move)
-    socket?.emit("player_move", move)
-  }
+    return () => clearTimeout(delayShowBattleSituation)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [battleSituation?.winner])
 
   return (
-    <>
-      <div>
-        <h1>{battlePlayers?.player1.name}</h1>
-        <button disabled={disabledP1} onClick={() => handleMove("rock")}>
-          Pedra
-        </button>
-        <button disabled={disabledP1} onClick={() => handleMove("paper")}>
-          Papel
-        </button>
-        <button disabled={disabledP1} onClick={() => handleMove("scissors")}>
-          Tesoura
-        </button>
-      </div>
-      <p>{battleMoves?.player1}</p>
-      <hr />
-      <p>{battleMoves?.player2}</p>
-      <div>
-        <h1>{battlePlayers?.player2?.name}</h1>
-        <button disabled={disabledP2} onClick={() => handleMove("rock")}>
-          Pedra
-        </button>
-        <button disabled={disabledP2} onClick={() => handleMove("paper")}>
-          Papel
-        </button>
-        <button disabled={disabledP2} onClick={() => handleMove("scissors")}>
-          Tesoura
-        </button>
-      </div>
+    <div className="battle-container">
+      <BattleBoard
+        playerName={battlePlayers?.player1.name}
+        disabled={player1Disabled}
+        handleMove={handleMove}
+      />
 
-      <div style={{ background: "aqua", padding: 20 }}>
-        {showBattleSituation && (
-          <>
-            <p>{battleSituation?.winner?.name} ganhou</p>
-            <p>{battleSituation?.looser?.name} perdeu</p>
-          </>
-        )}
+      {showMoves && !showBattleSituation && (
+        <div className="battle-modal">
+          <BattleMoves battleMoves={battleMoves} />
+        </div>
+      )}
 
-        {battleSituation?.draw && <p>Empate</p>}
-      </div>
-    </>
+      {showBattleSituation && (
+        <div className="battle-modal">
+          <BattleSituation battleSituation={battleSituation} />
+        </div>
+      )}
+
+      <BattleBoard
+        playerName={battlePlayers?.player2?.name}
+        disabled={player2Disabled}
+        handleMove={handleMove}
+      />
+    </div>
   )
 }
