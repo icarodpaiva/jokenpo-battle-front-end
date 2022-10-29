@@ -63,6 +63,7 @@ export const BattleMoves = ({ battleMoves }: BattleMovesProps) => {
   return (
     <div className="battleMoves-container">
       <img
+        style={{ transform: "scaleX(-1)" }}
         src={images[battleMoves.player1]}
         alt={battleMoves?.player1}
         ref={img1Ref}
