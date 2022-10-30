@@ -1,5 +1,5 @@
-import { useSocketContext } from "../../contexts/SocketContext"
-import "./statistics.scss"
+import { useSocketContext } from '../../contexts/SocketContext'
+import './statistics.scss'
 
 export const Statistics = () => {
   const { statistics, setView } = useSocketContext()
@@ -15,10 +15,10 @@ export const Statistics = () => {
       <table cellSpacing={0}>
         <colgroup>
           <col />
-          <col style={{ background: "aqua" }} />
-          <col style={{ background: "green" }} />
-          <col style={{ background: "red" }} />
-          <col style={{ background: "gray" }} />
+          <col style={{ background: 'aqua' }} />
+          <col style={{ background: 'green' }} />
+          <col style={{ background: 'red' }} />
+          <col style={{ background: 'gray' }} />
         </colgroup>
         <thead>
           <tr>
@@ -42,19 +42,21 @@ export const Statistics = () => {
         </tbody>
       </table>
 
-      <p>
+      <p className="buttons-container">
         <button
           style={{ marginTop: 20, padding: 5 }}
           onClick={() => window.location.reload()}
+          className="closeGame-button"
         >
-          Close Game
+          Fechar o jogo
         </button>
 
         <button
           style={{ marginTop: 20, padding: 5 }}
-          onClick={() => setView?.("Tournment")}
+          onClick={() => setView?.('Tournment')}
+          className="back-button"
         >
-          Back to Tournment Brackets
+          Voltar para as Chaves de Torneio
         </button>
       </p>
     </div>

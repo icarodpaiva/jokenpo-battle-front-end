@@ -27,4 +27,33 @@
       }
     }
   }
+
+  .buttons-container {
+    margin-top: 70px;
+
+    @media screen and (min-width: 768px) {
+      display: flex;
+      margin-top: 70px;
+    }
+
+    .closeGame-button {
+      margin: 20px;
+      padding: 10px;
+      border-radius: 30px;
+      background-color: #fe4a49;
+      line-height: 20px;
+      color: #f3f8f2;
+      cursor: pointer;
+    }
+
+    .back-button {
+      margin: 20px;
+      padding: 10px;
+      border-radius: 30px;
+      background-color: #6ab547;
+      line-height: 20px;
+      color: #f3f8f2;
+      cursor: pointer;
+    }
+  }
 }
