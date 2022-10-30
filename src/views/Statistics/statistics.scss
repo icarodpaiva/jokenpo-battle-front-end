@@ -2,21 +2,23 @@
   text-align: center;
 
   h1 {
+    margin-bottom: 20px;
     font-size: 24px;
   }
 
   table {
     width: 100%;
     border: 1px solid black;
-    font-size: 10px;
+    font-size: 8px;
 
     @media screen and (min-width: 768px) {
-      font-size: 25px;
+      font-size: 16px;
     }
 
     tr {
       td,
       th {
+        padding: 6px;
         border-bottom: 1px solid black;
       }
 
@@ -25,6 +27,51 @@
           border: none;
         }
       }
+    }
+
+    .title-player {
+      background-color: #ffd067;
+    }
+
+    .title-quantity {
+      background-color: #ab87ff;
+    }
+
+    .title-victories {
+      background-color: #6ab547;
+    }
+
+    .title-defeats {
+      background-color: #fe4a49;
+    }
+
+    .title-draw {
+      background-color: #28afb0;
+    }
+
+    .content-player {
+      background-color: #ffd067;
+      opacity: 0.7;
+    }
+
+    .content-quantity {
+      background-color: #ab87ff;
+      opacity: 0.7;
+    }
+
+    .content-victories {
+      background-color: #6ab547;
+      opacity: 0.7;
+    }
+
+    .content-defeats {
+      background-color: #fe4a49;
+      opacity: 0.7;
+    }
+
+    .content-draw {
+      background-color: #28afb0;
+      opacity: 0.7;
     }
   }
 
