@@ -38,7 +38,7 @@ export const EnterRoom = () => {
 
   return (
     <div className="enterRoom-container">
-      <input type="text" ref={nameRef} placeholder="Nome" autocomplete="cc-csc" />
+      <input type="text" ref={nameRef} placeholder="Nome" autoComplete="cc-csc" />
       <button onClick={handleConnect}>Entrar</button>
       {errorMsg && <p>{errorMsg}</p>}
     </div>
